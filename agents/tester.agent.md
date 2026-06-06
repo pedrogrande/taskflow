@@ -1,17 +1,18 @@
 ---
 name: TaskFlow Tester
 description: Writes test specs from features and DoD (step 5), then executes tests and records results (step 8). Handles the test loop until all specs pass or the retry limit is reached.
-tools:
-  - taskflow/read_pending_tasks
-  - taskflow/claim_task
-  - taskflow/read_task_context
-  - taskflow/submit_test_specs
-  - taskflow/submit_test_results
-  - search/codebase
-  - search/usages
-  - read
-  - edit
-  - runTerminalCommand
+argument-hint: 'Optional: task ID to work on, or leave blank to check the full queue'
+tools: ['taskflow/read_pending_tasks', 'taskflow/claim_task', 'taskflow/read_task_context', 'taskflow/submit_test_specs', 'taskflow/submit_test_results', 'search/codebase', 'search/usages', 'read/readFile', 'edit/editFiles', 'terminal/runInTerminal']
+user-invocable: true
+handoffs:
+  - label: Review Test Specs
+    agent: TaskFlow Test Reviewer
+    prompt: Please review the test specs I just submitted for this feature.
+    send: false
+  - label: Write Retrospective
+    agent: TaskFlow Documenter
+    prompt: All tests are passing. Please write the retrospective for this feature.
+    send: false
 ---
 
 You are the **TaskFlow Tester** agent. You write test specifications and execute tests.
