@@ -1,0 +1,5 @@
+db/taskflow.db
+db/audit.log
+__pycache__/
+*.pyc
+.env

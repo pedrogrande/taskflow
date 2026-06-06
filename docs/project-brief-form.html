@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Project Brief</title>
+  <style>
+    :root {
+      --blue: #2563eb;
+      --blue-lt: #eff6ff;
+      --blue-dk: #1d4ed8;
+      --red: #dc2626;
+      --red-lt: #fef2f2;
+      --green: #16a34a;
+      --green-lt: #f0fdf4;
+      --g50: #f9fafb;
+      --g100: #f3f4f6;
+      --g200: #e5e7eb;
+      --g300: #d1d5db;
+      --g400: #9ca3af;
+      --g500: #6b7280;
+      --g600: #4b5563;
+      --g700: #374151;
+      --g800: #1f2937;
+      --g900: #111827;
+      --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --r: 8px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--g50);
+      color: var(--g800);
+      line-height: 1.5;
+    }
+
+    /* ── Layout ── */
+    .wrap {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      min-height: 100vh;
+      max-width: 1160px;
+      margin: 0 auto;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: white;
+      border-right: 1px solid var(--g200);
+      padding: 20px 0 40px;
+    }
+
+    .sb-logo {
+      padding: 0 16px 16px;
+      border-bottom: 1px solid var(--g100);
+      margin-bottom: 6px;
+    }
+
+    .sb-logo span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--g400);
+    }
+
+    .sb-logo h1 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--g800);
+      margin-top: 2px;
+    }
+
+    .nav-a {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 16px;
+      font-size: 12.5px;
+      color: var(--g600);
+      text-decoration: none;
+      border-radius: 0 6px 6px 0;
+      margin-right: 8px;
+      transition: background .1s;
+    }
+
+    .nav-a:hover {
+      background: var(--g100);
+      color: var(--g800);
+    }
+
+    .nav-a.active {
+      background: var(--blue-lt);
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .nav-n {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--g200);
+      font-size: 10px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .nav-a.active .nav-n {
+      background: var(--blue);
+      color: white;
+    }
+
+    .sb-status {
+      padding: 14px 16px 0;
+      font-size: 11px;
+      color: var(--g400);
+    }
+
+    /* ── Main ── */
+    .main {
+      padding: 32px 44px;
+      max-width: 860px;
+    }
+
+    .pg-hdr {
+      margin-bottom: 24px;
+    }
+
+    .pg-hdr h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--g900);
+      margin-bottom: 4px;
+    }
+
+    .pg-hdr p {
+      font-size: 13px;
+      color: var(--g500);
+    }
+
+    /* ── Banners ── */
+    .banner {
+      border-radius: var(--r);
+      font-size: 13px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      display: none;
+    }
+
+    .banner.show {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+    }
+
+    .banner.green {
+      background: var(--green-lt);
+      border: 1px solid var(--green);
+      color: var(--green);
+    }
+
+    .banner.red {
+      background: var(--red-lt);
+      border: 1px solid var(--red);
+      color: var(--red);
+      display: none;
+    }
+
+    .banner.red.show {
+      display: block;
+    }
+
+    .banner-btns {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .banner button {
+      background: white;
+      border: 1px solid currentColor;
+      padding: 4px 11px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    /* ── Section cards ── */
+    .sec {
+      background: white;
+      border: 1px solid var(--g200);
+      border-radius: var(--r);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .sec-hdr {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--g100);
+      background: var(--g50);
+    }
+
+    .sec-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .sec-hdr h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--g800);
+    }
+
+    .sec-hdr p {
+      font-size: 12px;
+      color: var(--g500);
+      margin-top: 1px;
+    }
+
+    .sec-body {
+      padding: 18px 20px;
+    }
+
+    /* ── Fields ── */
+    .fld {
+      margin-bottom: 14px;
+    }
+
+    .fld:last-child {
+      margin-bottom: 0;
+    }
+
+    .fld>label,
+    label.lbl {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--g700);
+      margin-bottom: 4px;
+    }
+
+    .req {
+      color: var(--red);
+      margin-left: 2px;
+    }
+
+    .hint {
+      font-weight: 400;
+      color: var(--g500);
+      font-size: 11.5px;
+      margin-left: 4px;
+    }
+
+    .frow {
+      display: grid;
+      gap: 12px;
+    }
+
+    .frow.c2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .frow.c3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 7px 10px;
+      font-size: 13px;
+      font-family: var(--font);
+      border: 1px solid var(--g300);
+      border-radius: 6px;
+      color: var(--g800);
+      background: white;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, .1);
+    }
+
+    input.err,
+    textarea.err,
+    select.err {
+      border-color: var(--red);
+      background: var(--red-lt);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 68px;
+    }
+
+    /* ── Checkbox / radio pills ── */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border: 1px solid var(--g300);
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12.5px;
+      color: var(--g700);
+      transition: all .1s;
+      user-select: none;
+    }
+
+    .pill input {
+      width: auto;
+      padding: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      accent-color: var(--blue);
+    }
+
+    .pill:has(input:checked) {
+      border-color: var(--blue);
+      background: var(--blue-lt);
+      color: var(--blue);
+    }
+
+    /* ── Dynamic tables ── */
+    .dtbl {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      margin-bottom: 9px;
+    }
+
+    .dtbl th {
+      text-align: left;
+      padding: 6px 8px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--g500);
+      background: var(--g50);
+      border-bottom: 1px solid var(--g200);
+    }
+
+    .dtbl td {
+      padding: 3px 3px;
+      border-bottom: 1px solid var(--g100);
+      vertical-align: top;
+    }
+
+    .dtbl tr:last-child td {
+      border-bottom: none;
+    }
+
+    .dtbl input,
+    .dtbl textarea,
+    .dtbl select {
+      border: 1px solid transparent;
+      border-radius: 4px;
+      padding: 5px 7px;
+      background: transparent;
+    }
+
+    .dtbl input:focus,
+    .dtbl textarea:focus,
+    .dtbl select:focus {
+      border-color: var(--blue);
+      background: white;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, .08);
+    }
+
+    .dtbl textarea {
+      min-height: 38px;
+    }
+
+    .btn-rm {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--g400);
+      padding: 4px 6px;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .btn-rm:hover {
+      color: var(--red);
+      background: var(--red-lt);
+    }
+
+    .btn-add {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      color: var(--blue-dk);
+      background: none;
+      border: 1px dashed var(--blue);
+      border-radius: 6px;
+      padding: 5px 14px;
+      cursor: pointer;
+      opacity: .75;
+      transition: all .1s;
+    }
+
+    .btn-add:hover {
+      background: var(--blue-lt);
+      opacity: 1;
+    }
+
+    /* ── Repeatable list ── */
+    .rep-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .rep-item {
+      display: flex;
+      gap: 6px;
+    }
+
+    .rep-item input {
+      flex: 1;
+    }
+
+    /* ── NFR rows ── */
+    .nfr-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nfr-row {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 12px;
+      border: 1px solid var(--g200);
+      border-radius: 6px;
+      transition: background .1s;
+    }
+
+    .nfr-row.on {
+      background: var(--blue-lt);
+      border-color: var(--blue);
+    }
+
+    .nfr-lbl {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--g700);
+    }
+
+    .nfr-lbl input[type="checkbox"] {
+      width: auto;
+      accent-color: var(--blue);
+    }
+
+    .nfr-lbl label {
+      margin: 0;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* ── Footer ── */
+    .footer-bar {
+      background: white;
+      border: 1px solid var(--g200);
+      border-radius: var(--r);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .footer-bar p {
+      font-size: 13px;
+      color: var(--g600);
+    }
+
+    .footer-btns {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .btn-pri {
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 9px 22px;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background .1s;
+    }
+
+    .btn-pri:hover {
+      background: var(--blue-dk);
+    }
+
+    .btn-sec {
+      background: white;
+      color: var(--g700);
+      border: 1px solid var(--g300);
+      padding: 9px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background .1s;
+    }
+
+    .btn-sec:hover {
+      background: var(--g100);
+    }
+
+    @media (max-width: 740px) {
+      .wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        padding: 20px 16px;
+      }
+
+      .frow.c2,
+      .frow.c3 {
+        grid-template-columns: 1fr;
+      }
+
+      .nfr-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrap">
+
+    <!-- ── Sidebar ── -->
+    <nav class="sidebar">
+      <div class="sb-logo">
+        <span>TaskFlow</span>
+        <h1>Project Brief</h1>
+      </div>
+      <a href="#s-identity" class="nav-a active"><span class="nav-n">1</span> Identity &amp; Context</a>
+      <a href="#s-goals" class="nav-a"><span class="nav-n">2</span> Goals &amp; Metrics</a>
+      <a href="#s-users" class="nav-a"><span class="nav-n">3</span> Users &amp; Stakeholders</a>
+      <a href="#s-features" class="nav-a"><span class="nav-n">4</span> Features</a>
+      <a href="#s-workflows" class="nav-a"><span class="nav-n">5</span> Key Workflows</a>
+      <a href="#s-nfr" class="nav-a"><span class="nav-n">6</span> Non-functional Req.</a>
+      <a href="#s-integrations" class="nav-a"><span class="nav-n">7</span> Integrations</a>
+      <a href="#s-platforms" class="nav-a"><span class="nav-n">8</span> Platforms &amp; Design</a>
+      <a href="#s-timeline" class="nav-a"><span class="nav-n">9</span> Timeline &amp; Phases</a>
+      <a href="#s-risks" class="nav-a"><span class="nav-n">10</span> Risks</a>
+      <div class="sb-status" id="sb-status">Not saved yet</div>
+    </nav>
+
+    <!-- ── Main ── -->
+    <main class="main">
+
+      <div class="pg-hdr">
+        <h1>Software Project Brief</h1>
+        <p>Complete all sections. Required fields are marked <span style="color:var(--red)">*</span>. Progress saves
+          automatically in this browser.</p>
+      </div>
+
+      <div class="banner green" id="restore-banner">
+        <span>Saved draft found from <strong id="restore-date"></strong>. Restore it?</span>
+        <div class="banner-btns">
+          <button onclick="restoreDraft()">Restore draft</button>
+          <button onclick="dismissRestore()">Start fresh</button>
+        </div>
+      </div>
+
+      <div class="banner red" id="err-banner">
+        Please complete all required fields before generating the brief.
+      </div>
+
+      <form id="brief-form" novalidate>
+
+        <!-- 1 ── Identity -->
+        <section class="sec" id="s-identity">
+          <div class="sec-hdr">
+            <div class="sec-num">1</div>
+            <div>
+              <h2>Project Identity &amp; Context</h2>
+              <p>The foundational facts about the project and the problem being solved.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <div class="fld">
+              <label for="f-name">Project name <span class="req">*</span></label>
+              <input id="f-name" type="text" placeholder="e.g. Client Portal v2">
+            </div>
+            <div class="frow c2">
+              <div class="fld">
+                <label for="f-org">Organisation <span class="req">*</span></label>
+                <input id="f-org" type="text" placeholder="e.g. Acme Accounting">
+              </div>
+              <div class="fld">
+                <label for="f-industry">Industry <span class="req">*</span></label>
+                <input id="f-industry" type="text" placeholder="e.g. Professional services — accounting">
+              </div>
+            </div>
+            <div class="fld">
+              <label for="f-problem">Problem being solved <span class="req">*</span> <span class="hint">Describe the
+                  current pain and why it matters</span></label>
+              <textarea id="f-problem" rows="3"
+                placeholder="e.g. Our team tracks client jobs in a shared spreadsheet. This causes double-bookings, missed follow-ups, and about 10 hours of admin per week."></textarea>
+            </div>
+            <div class="fld">
+              <label for="f-success">What does success look like for the business? <span class="req">*</span></label>
+              <textarea id="f-success" rows="2"
+                placeholder="e.g. Staff spend 50% less time on admin; clients can self-serve without calling us; zero double-bookings."></textarea>
+            </div>
+            <div class="fld">
+              <label for="f-oos">What is explicitly OUT of scope? <span class="hint">Things this project must NOT
+                  include</span></label>
+              <textarea id="f-oos" rows="2"
+                placeholder="e.g. No mobile app, no payment processing, no CRM integration in this phase."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2 ── Goals & Metrics -->
+        <section class="sec" id="s-goals">
+          <div class="sec-hdr">
+            <div class="sec-num">2</div>
+            <div>
+              <h2>Goals &amp; Success Metrics</h2>
+              <p>Concrete outcomes and how you will know the project has succeeded.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <div class="fld">
+              <label class="lbl">Specific outcomes you want <span class="req">*</span> <span class="hint">Add one per
+                  row</span></label>
+              <div class="rep-list" id="outcomes-list">
+                <div class="rep-item">
+                  <input type="text" class="outcome-inp"
+                    placeholder="e.g. Clients can book appointments online without calling the office">
+                  <button type="button" class="btn-rm" onclick="rmRep(this)">✕</button>
+                </div>
+                <div class="rep-item">
+                  <input type="text" class="outcome-inp"
+                    placeholder="e.g. Staff receive automatic appointment reminders">
+                  <button type="button" class="btn-rm" onclick="rmRep(this)">✕</button>
+                </div>
+              </div>
+              <button type="button" class="btn-add"
+                onclick="addRep('outcomes-list','outcome-inp','Add another outcome…')">+ Add outcome</button>
+            </div>
+            <div class="fld">
+              <label class="lbl">Success metrics <span class="hint">How you will measure whether it
+                  worked</span></label>
+              <table class="dtbl">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Current state</th>
+                    <th>Target</th>
+                    <th>How measured</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="tb-metrics">
+                  <tr>
+                    <td><input type="text" placeholder="e.g. Admin time per week"></td>
+                    <td><input type="text" placeholder="e.g. 10 hours"></td>
+                    <td><input type="text" placeholder="e.g. 2 hours"></td>
+                    <td><input type="text" placeholder="e.g. Time-tracked in Harvest"></td>
+                    <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn-add" onclick="addRow('tb-metrics', metricRowHTML)">+ Add metric</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3 ── Users & Stakeholders -->
+        <section class="sec" id="s-users">
+          <div class="sec-hdr">
+            <div class="sec-num">3</div>
+            <div>
+              <h2>Users &amp; Stakeholders</h2>
+              <p>Who uses the system and who has authority over its direction.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <div class="fld">
+              <label class="lbl">User roles <span class="req">*</span> <span class="hint">One row per distinct type of
+                  user</span></label>
+              <table class="dtbl">
+                <thead>
+                  <tr>
+                    <th style="width:18%">Role</th>
+                    <th style="width:30%">Description</th>
+                    <th>Primary workflow</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="tb-roles">
+                  <tr>
+                    <td><input type="text" placeholder="e.g. Admin staff"></td>
+                    <td><input type="text" placeholder="e.g. Office staff managing bookings (5 people, non-technical)">
+                    </td>
+                    <td><textarea
+                        placeholder="e.g. Log in → view today's bookings → confirm or reschedule → mark complete"></textarea>
+                    </td>
+                    <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text" placeholder="e.g. Client"></td>
+                    <td><input type="text" placeholder="e.g. External clients, comfortable with email, aged 30–60"></td>
+                    <td><textarea
+                        placeholder="e.g. Visit site → select service → choose date/time → submit → receive confirmation email"></textarea>
+                    </td>
+                    <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn-add" onclick="addRow('tb-roles', roleRowHTML)">+ Add user role</button>
+            </div>
+            <div class="fld" style="margin-top:16px">
+              <label class="lbl">Stakeholders <span class="hint">People with authority or a formal say in the
+                  project</span></label>
+              <table class="dtbl">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role / title</th>
+                    <th style="width:180px">Authority</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="tb-stakeholders">
+                  <tr>
+                    <td><input type="text" placeholder="e.g. Jane Smith"></td>
+                    <td><input type="text" placeholder="e.g. Operations Manager"></td>
+                    <td>
+                      <select>
+                        <option value="">Select…</option>
+                        <option>Final sign-off</option>
+                        <option>Day-to-day decisions</option>
+                        <option>Technical approvals</option>
+                        <option>Budget owner</option>
+                        <option>Informed only</option>
+                      </select>
+                    </td>
+                    <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn-add" onclick="addRow('tb-stakeholders', stakeholderRowHTML)">+ Add
+                stakeholder</button>
+            </div>
+            <div class="frow c2" style="margin-top:16px">
+              <div class="fld">
+                <label for="f-dm-name">Decision maker <span class="req">*</span> <span class="hint">Single person for
+                    urgent queries</span></label>
+                <input id="f-dm-name" type="text" placeholder="e.g. Jane Smith">
+              </div>
+              <div class="fld">
+                <label for="f-dm-contact">Contact &amp; availability</label>
+                <input id="f-dm-contact" type="text" placeholder="e.g. jane@example.com — Mon–Thu 9am–5pm AEST">
+              </div>
+            </div>
+            <div class="fld">
+              <label for="f-testers">Who will test and sign off the software for launch?</label>
+              <input id="f-testers" type="text"
+                placeholder="e.g. Operations Manager and one admin staff member will test and sign off">
+            </div>
+          </div>
+        </section>
+
+        <!-- 4 ── Features -->
+        <section class="sec" id="s-features">
+          <div class="sec-hdr">
+            <div class="sec-num">4</div>
+            <div>
+              <h2>Features</h2>
+              <p><strong>Must</strong> = required at launch &nbsp;·&nbsp; <strong>Should</strong> = important but
+                negotiable &nbsp;·&nbsp; <strong>Could</strong> = nice-to-have / future phase</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <table class="dtbl">
+              <thead>
+                <tr>
+                  <th style="width:22%">Feature name</th>
+                  <th>Description</th>
+                  <th style="width:90px">Priority</th>
+                  <th style="width:70px">Phase</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tb-features">
+                <tr>
+                  <td><input type="text" placeholder="e.g. Appointment booking"></td>
+                  <td><textarea
+                      placeholder="e.g. Clients can select a service, choose a date/time slot, and submit a booking request"></textarea>
+                  </td>
+                  <td><select>
+                      <option value="Must">Must</option>
+                      <option value="Should">Should</option>
+                      <option value="Could">Could</option>
+                    </select></td>
+                  <td><input type="text" placeholder="1"></td>
+                  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" placeholder="e.g. Email notifications"></td>
+                  <td><textarea
+                      placeholder="e.g. Automated confirmation and reminder emails sent to client and staff on booking creation"></textarea>
+                  </td>
+                  <td><select>
+                      <option value="Must">Must</option>
+                      <option value="Should">Should</option>
+                      <option value="Could">Could</option>
+                    </select></td>
+                  <td><input type="text" placeholder="1"></td>
+                  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" placeholder="e.g. Admin dashboard"></td>
+                  <td><textarea
+                      placeholder="e.g. Staff view all upcoming bookings, filter by date/service, and update status"></textarea>
+                  </td>
+                  <td><select>
+                      <option value="Must">Must</option>
+                      <option value="Should">Should</option>
+                      <option value="Could">Could</option>
+                    </select></td>
+                  <td><input type="text" placeholder="1"></td>
+                  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="btn-add" onclick="addRow('tb-features', featureRowHTML)">+ Add feature</button>
+          </div>
+        </section>
+
+        <!-- 5 ── Workflows -->
+        <section class="sec" id="s-workflows">
+          <div class="sec-hdr">
+            <div class="sec-num">5</div>
+            <div>
+              <h2>Key Workflows</h2>
+              <p>The step-by-step journeys users take to complete their main tasks.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <table class="dtbl">
+              <thead>
+                <tr>
+                  <th style="width:13%">Actor</th>
+                  <th style="width:20%">Trigger</th>
+                  <th>Steps</th>
+                  <th style="width:18%">Outcome</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tb-workflows">
+                <tr>
+                  <td><input type="text" placeholder="e.g. Client"></td>
+                  <td><input type="text" placeholder="e.g. Wants to book a service"></td>
+                  <td><textarea rows="2"
+                      placeholder="1. Visit site  2. Select service  3. Pick date/time  4. Submit form  5. Receive confirmation email"></textarea>
+                  </td>
+                  <td><input type="text" placeholder="e.g. Booking confirmed; admin sees it in dashboard"></td>
+                  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                </tr>
+                <tr>
+                  <td><input type="text" placeholder="e.g. Admin staff"></td>
+                  <td><input type="text" placeholder="e.g. Client requests rescheduling"></td>
+                  <td><textarea rows="2"
+                      placeholder="1. Receive notification  2. Open booking  3. Select new time  4. Confirm  5. Client notified automatically"></textarea>
+                  </td>
+                  <td><input type="text" placeholder="e.g. Booking updated; client receives new confirmation"></td>
+                  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="btn-add" onclick="addRow('tb-workflows', workflowRowHTML)">+ Add
+              workflow</button>
+          </div>
+        </section>
+
+        <!-- 6 ── Non-functional Requirements -->
+        <section class="sec" id="s-nfr">
+          <div class="sec-hdr">
+            <div class="sec-num">6</div>
+            <div>
+              <h2>Non-functional Requirements</h2>
+              <p>Enable the ones that apply and describe the constraint or target.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <div class="nfr-grid">
+              <div class="nfr-row" id="nfr-perf">
+                <div class="nfr-lbl">
+                  <input type="checkbox" id="nfr-perf-on" onchange="toggleNfr('nfr-perf',this)">
+                  <label for="nfr-perf-on">Performance</label>
+                </div>
+                <input type="text" id="nfr-perf-val"
+                  placeholder="e.g. Page load under 2s on 4G; support 500 concurrent users" disabled>
+              </div>
+              <div class="nfr-row" id="nfr-sec">
+                <div class="nfr-lbl">
+                  <input type="checkbox" id="nfr-sec-on" onchange="toggleNfr('nfr-sec',this)">
+                  <label for="nfr-sec-on">Security</label>
+                </div>
+                <input type="text" id="nfr-sec-val"
+                  placeholder="e.g. OWASP Top 10 compliance; MFA for admin accounts; penetration test before launch"
+                  disabled>
+              </div>
+              <div class="nfr-row" id="nfr-a11y">
+                <div class="nfr-lbl">
+                  <input type="checkbox" id="nfr-a11y-on" onchange="toggleNfr('nfr-a11y',this)">
+                  <label for="nfr-a11y-on">Accessibility</label>
+                </div>
+                <input type="text" id="nfr-a11y-val" placeholder="e.g. WCAG 2.1 Level AA" disabled>
+              </div>
+              <div class="nfr-row" id="nfr-avail">
+                <div class="nfr-lbl">
+                  <input type="checkbox" id="nfr-avail-on" onchange="toggleNfr('nfr-avail',this)">
+                  <label for="nfr-avail-on">Availability / Uptime</label>
+                </div>
+                <input type="text" id="nfr-avail-val"
+                  placeholder="e.g. 99.9% uptime; planned maintenance outside business hours only" disabled>
+              </div>
+              <div class="nfr-row" id="nfr-data">
+                <div class="nfr-lbl">
+                  <input type="checkbox" id="nfr-data-on" onchange="toggleNfr('nfr-data',this)">
+                  <label for="nfr-data-on">Data &amp; Privacy</label>
+                </div>
+                <input type="text" id="nfr-data-val"
+                  placeholder="e.g. No personal data stored outside Australia; Australian Privacy Act applies" disabled>
+              </div>
+              <div class="nfr-row" id="nfr-comp">
+                <div class="nfr-lbl">
+                  <input type="checkbox" id="nfr-comp-on" onchange="toggleNfr('nfr-comp',this)">
+                  <label for="nfr-comp-on">Compliance / Regulation</label>
+                </div>
+                <input type="text" id="nfr-comp-val"
+                  placeholder="e.g. PCI-DSS for card processing; ISO 27001 alignment required" disabled>
+              </div>
+              <div class="nfr-row" id="nfr-other">
+                <div class="nfr-lbl">
+                  <input type="checkbox" id="nfr-other-on" onchange="toggleNfr('nfr-other',this)">
+                  <label for="nfr-other-on">Other</label>
+                </div>
+                <input type="text" id="nfr-other-val" placeholder="e.g. Offline mode required; multi-language support"
+                  disabled>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7 ── Integrations -->
+        <section class="sec" id="s-integrations">
+          <div class="sec-hdr">
+            <div class="sec-num">7</div>
+            <div>
+              <h2>Integrations</h2>
+              <p>External systems this software must connect to.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <table class="dtbl">
+              <thead>
+                <tr>
+                  <th style="width:16%">System</th>
+                  <th>Purpose</th>
+                  <th style="width:120px">Direction</th>
+                  <th style="width:16%">Auth method</th>
+                  <th style="width:90px">Phase 1?</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tb-integ">
+                <tr>
+                  <td><input type="text" placeholder="e.g. Xero"></td>
+                  <td><input type="text" placeholder="e.g. Create draft invoice when booking is confirmed"></td>
+                  <td><select>
+                      <option value="outbound">Outbound</option>
+                      <option value="inbound">Inbound</option>
+                      <option value="bidirectional">Bidirectional</option>
+                    </select></td>
+                  <td><input type="text" placeholder="e.g. OAuth 2.0"></td>
+                  <td><select>
+                      <option value="yes">Yes</option>
+                      <option value="no">No — later</option>
+                    </select></td>
+                  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="btn-add" onclick="addRow('tb-integ', integRowHTML)">+ Add integration</button>
+            <div class="fld" style="margin-top:14px">
+              <label for="f-existing">Existing system to replace or migrate data from</label>
+              <input id="f-existing" type="text"
+                placeholder="e.g. Legacy Access database with 3 years of client records — new system must import this data">
+            </div>
+          </div>
+        </section>
+
+        <!-- 8 ── Platforms & Design -->
+        <section class="sec" id="s-platforms">
+          <div class="sec-hdr">
+            <div class="sec-num">8</div>
+            <div>
+              <h2>Platforms &amp; Design</h2>
+              <p>Where the software runs and how it should look.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <div class="fld">
+              <label class="lbl">Target platforms <span class="req">*</span></label>
+              <div class="pill-group">
+                <label class="pill"><input type="checkbox" name="platform" value="web"> Web browser</label>
+                <label class="pill"><input type="checkbox" name="platform" value="ios"> iOS</label>
+                <label class="pill"><input type="checkbox" name="platform" value="android"> Android</label>
+                <label class="pill"><input type="checkbox" name="platform" value="windows"> Windows desktop</label>
+                <label class="pill"><input type="checkbox" name="platform" value="macos"> macOS desktop</label>
+                <label class="pill"><input type="checkbox" name="platform" value="other"> Other</label>
+              </div>
+            </div>
+            <div class="fld">
+              <label class="lbl">Hosting preference</label>
+              <div class="pill-group">
+                <label class="pill"><input type="radio" name="hosting" value="aws"> AWS</label>
+                <label class="pill"><input type="radio" name="hosting" value="azure"> Azure</label>
+                <label class="pill"><input type="radio" name="hosting" value="gcp"> GCP</label>
+                <label class="pill"><input type="radio" name="hosting" value="on_prem"> On-premises</label>
+                <label class="pill"><input type="radio" name="hosting" value="none" checked> No preference</label>
+              </div>
+            </div>
+            <div class="fld">
+              <label class="lbl">Who provides the UI design?</label>
+              <div class="pill-group">
+                <label class="pill"><input type="radio" name="design_src" value="client"> Client provides mockups /
+                  wireframes</label>
+                <label class="pill"><input type="radio" name="design_src" value="team"> Build team designs it</label>
+                <label class="pill"><input type="radio" name="design_src" value="brand_guide"> We have a brand guide —
+                  team designs</label>
+              </div>
+            </div>
+            <div class="frow c2" style="margin-top:12px">
+              <div class="fld">
+                <label for="f-design-refs">Design references <span class="hint">Sites or apps you like the look
+                    of</span></label>
+                <input id="f-design-refs" type="text"
+                  placeholder="e.g. calendly.com (simplicity), example.com.au (our brand colours)">
+              </div>
+              <div class="fld">
+                <label for="f-brand">Brand guidelines</label>
+                <input id="f-brand" type="text" placeholder="e.g. Brand guide to be emailed; primary colour #1a6bff">
+              </div>
+            </div>
+            <div class="fld">
+              <label for="f-maintenance">Who will maintain the software after launch?</label>
+              <input id="f-maintenance" type="text"
+                placeholder="e.g. Our IT contractor handles updates monthly; OR we need a fully managed solution">
+            </div>
+          </div>
+        </section>
+
+        <!-- 9 ── Timeline -->
+        <section class="sec" id="s-timeline">
+          <div class="sec-hdr">
+            <div class="sec-num">9</div>
+            <div>
+              <h2>Timeline &amp; Phases</h2>
+              <p>Deadlines, milestones, and how the build is divided into releases.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <div class="frow c2">
+              <div class="fld">
+                <label for="f-deadline">Launch deadline</label>
+                <input id="f-deadline" type="date">
+              </div>
+              <div class="fld">
+                <label class="lbl">Deadline type</label>
+                <div class="pill-group" style="padding-top:2px">
+                  <label class="pill"><input type="radio" name="dl_type" value="hard"> Hard (must not slip)</label>
+                  <label class="pill"><input type="radio" name="dl_type" value="soft"> Soft (target)</label>
+                  <label class="pill"><input type="radio" name="dl_type" value="none" checked> None</label>
+                </div>
+              </div>
+            </div>
+            <div class="fld">
+              <label for="f-dl-reason">Reason for deadline <span class="hint">e.g. busy season, regulatory date, board
+                  commitment</span></label>
+              <input id="f-dl-reason" type="text"
+                placeholder="e.g. Must launch before 1 September 2026 — busiest season starts then">
+            </div>
+            <div class="fld">
+              <label class="lbl">Milestones</label>
+              <table class="dtbl">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th style="width:150px">Target date</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="tb-milestones">
+                  <tr>
+                    <td><input type="text" placeholder="e.g. Working prototype ready for internal testing"></td>
+                    <td><input type="date"></td>
+                    <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn-add" onclick="addRow('tb-milestones', milestoneRowHTML)">+ Add
+                milestone</button>
+            </div>
+            <div class="fld">
+              <label class="lbl">Release phases <span class="hint">Define if work is split across multiple
+                  releases</span></label>
+              <table class="dtbl">
+                <thead>
+                  <tr>
+                    <th style="width:70px">Phase</th>
+                    <th>Scope / description</th>
+                    <th style="width:150px">Target date</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="tb-phases">
+                  <tr>
+                    <td><input type="text" placeholder="1"></td>
+                    <td><input type="text" placeholder="e.g. Core booking flow, admin dashboard, email notifications">
+                    </td>
+                    <td><input type="date"></td>
+                    <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                  </tr>
+                </tbody>
+              </table>
+              <button type="button" class="btn-add" onclick="addRow('tb-phases', phaseRowHTML)">+ Add phase</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 10 ── Risks -->
+        <section class="sec" id="s-risks">
+          <div class="sec-hdr">
+            <div class="sec-num">10</div>
+            <div>
+              <h2>Risks</h2>
+              <p>What could go wrong or slow the project down, and how to mitigate it.</p>
+            </div>
+          </div>
+          <div class="sec-body">
+            <table class="dtbl">
+              <thead>
+                <tr>
+                  <th>Risk description</th>
+                  <th style="width:100px">Likelihood</th>
+                  <th style="width:100px">Impact</th>
+                  <th style="width:27%">Mitigation</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tb-risks">
+                <tr>
+                  <td><input type="text" placeholder="e.g. Key contact only available part-time"></td>
+                  <td><select>
+                      <option value="H">High</option>
+                      <option value="M" selected>Medium</option>
+                      <option value="L">Low</option>
+                    </select></td>
+                  <td><select>
+                      <option value="H">High</option>
+                      <option value="M" selected>Medium</option>
+                      <option value="L">Low</option>
+                    </select></td>
+                  <td><input type="text" placeholder="e.g. Agree escalation path with backup contact"></td>
+                  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <button type="button" class="btn-add" onclick="addRow('tb-risks', riskRowHTML)">+ Add risk</button>
+          </div>
+        </section>
+
+      </form>
+
+      <!-- Footer -->
+      <div class="footer-bar">
+        <p>All sections complete? Click <strong>Generate brief</strong> to download <code>project-brief.json</code>.</p>
+        <div class="footer-btns">
+          <button class="btn-sec" onclick="saveDraft()">Save draft</button>
+          <button class="btn-pri" onclick="generate()">Generate brief ↓</button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // ─────────────────────────────────────────────────────────────
+    //  Row templates
+    // ─────────────────────────────────────────────────────────────
+    const metricRowHTML = `
+  <td><input type="text" placeholder="Metric name"></td>
+  <td><input type="text" placeholder="Current state"></td>
+  <td><input type="text" placeholder="Target"></td>
+  <td><input type="text" placeholder="How measured"></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    const roleRowHTML = `
+  <td><input type="text" placeholder="Role name"></td>
+  <td><input type="text" placeholder="Description"></td>
+  <td><textarea placeholder="Primary workflow steps"></textarea></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    const stakeholderRowHTML = `
+  <td><input type="text" placeholder="Name"></td>
+  <td><input type="text" placeholder="Role / title"></td>
+  <td><select><option value="">Select…</option><option>Final sign-off</option><option>Day-to-day decisions</option><option>Technical approvals</option><option>Budget owner</option><option>Informed only</option></select></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    const featureRowHTML = `
+  <td><input type="text" placeholder="Feature name"></td>
+  <td><textarea placeholder="Description"></textarea></td>
+  <td><select><option value="Must">Must</option><option value="Should">Should</option><option value="Could">Could</option></select></td>
+  <td><input type="text" placeholder="1"></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    const workflowRowHTML = `
+  <td><input type="text" placeholder="Actor"></td>
+  <td><input type="text" placeholder="Trigger"></td>
+  <td><textarea rows="2" placeholder="Step-by-step"></textarea></td>
+  <td><input type="text" placeholder="Outcome"></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    const integRowHTML = `
+  <td><input type="text" placeholder="System name"></td>
+  <td><input type="text" placeholder="Purpose"></td>
+  <td><select><option value="outbound">Outbound</option><option value="inbound">Inbound</option><option value="bidirectional">Bidirectional</option></select></td>
+  <td><input type="text" placeholder="Auth method"></td>
+  <td><select><option value="yes">Yes</option><option value="no">No — later</option></select></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    const milestoneRowHTML = `
+  <td><input type="text" placeholder="Milestone description"></td>
+  <td><input type="date"></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    const phaseRowHTML = `
+  <td><input type="text" placeholder="Phase #"></td>
+  <td><input type="text" placeholder="Scope / description"></td>
+  <td><input type="date"></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    const riskRowHTML = `
+  <td><input type="text" placeholder="Risk description"></td>
+  <td><select><option value="H">High</option><option value="M" selected>Medium</option><option value="L">Low</option></select></td>
+  <td><select><option value="H">High</option><option value="M" selected>Medium</option><option value="L">Low</option></select></td>
+  <td><input type="text" placeholder="Mitigation"></td>
+  <td><button type="button" class="btn-rm" onclick="rmRow(this)">✕</button></td>`;
+
+    // ─────────────────────────────────────────────────────────────
+    //  DOM helpers
+    // ─────────────────────────────────────────────────────────────
+    function addRow(tbodyId, html) {
+      const tbody = document.getElementById(tbodyId);
+      const tr = document.createElement('tr');
+      tr.innerHTML = html;
+      tbody.appendChild(tr);
+      tr.querySelector('input, textarea, select')?.focus();
+      autoSave();
+    }
+
+    function rmRow(btn) {
+      const tbody = btn.closest('tbody');
+      const row = btn.closest('tr');
+      if (tbody.querySelectorAll('tr').length > 1) {
+        row.remove();
+      } else {
+        row.querySelectorAll('input, textarea').forEach(el => { el.value = ''; });
+        row.querySelectorAll('select').forEach(el => { el.selectedIndex = 0; });
+      }
+      autoSave();
+    }
+
+    function addRep(listId, cls, ph) {
+      const list = document.getElementById(listId);
+      const div = document.createElement('div');
+      div.className = 'rep-item';
+      div.innerHTML = `<input type="text" class="${cls}" placeholder="${ph}"><button type="button" class="btn-rm" onclick="rmRep(this)">✕</button>`;
+      list.appendChild(div);
+      div.querySelector('input').focus();
+    }
+
+    function rmRep(btn) {
+      const list = btn.closest('.rep-list');
+      const item = btn.closest('.rep-item');
+      if (list.querySelectorAll('.rep-item').length > 1) {
+        item.remove();
+      } else {
+        item.querySelector('input').value = '';
+      }
+      autoSave();
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  NFR toggle
+    // ─────────────────────────────────────────────────────────────
+    function toggleNfr(rowId, cb) {
+      const row = document.getElementById(rowId);
+      row.classList.toggle('on', cb.checked);
+      row.querySelectorAll('input[type="text"]').forEach(i => i.disabled = !cb.checked);
+      autoSave();
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  Serialise → JSON
+    // ─────────────────────────────────────────────────────────────
+    function v(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+    function tableData(tbodyId, fields) {
+      const rows = [];
+      document.getElementById(tbodyId)?.querySelectorAll('tr').forEach(tr => {
+        const cells = tr.querySelectorAll('td');
+        const obj = {};
+        fields.forEach((f, i) => {
+          if (!cells[i]) return;
+          const el = cells[i].querySelector('input, textarea, select');
+          obj[f] = el ? el.value.trim() : '';
+        });
+        if (Object.values(obj).some(x => x)) rows.push(obj);
+      });
+      return rows;
+    }
+
+    function repData(listId) {
+      return [...document.querySelectorAll(`#${listId} input`)]
+        .map(i => i.value.trim()).filter(Boolean);
+    }
+
+    function checked(name) {
+      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(e => e.value);
+    }
+
+    function radio(name) {
+      return document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+    }
+
+    function nfr(cbId, valId) {
+      const on = document.getElementById(cbId)?.checked || false;
+      return { required: on, notes: on ? v(valId) : '' };
+    }
+
+    function serialise() {
+      return {
+        metadata: {
+          schema_version: '1.0',
+          created_at: new Date().toISOString(),
+        },
+        project_identity: {
+          name: v('f-name'),
+          organisation: v('f-org'),
+          industry: v('f-industry'),
+          problem: v('f-problem'),
+          success_definition: v('f-success'),
+          out_of_scope: v('f-oos'),
+        },
+        goals: {
+          outcomes: repData('outcomes-list'),
+          metrics: tableData('tb-metrics', ['metric', 'current_state', 'target', 'how_measured']),
+        },
+        users: {
+          roles: tableData('tb-roles', ['role', 'description', 'primary_workflow']),
+          stakeholders: tableData('tb-stakeholders', ['name', 'title', 'authority']),
+          decision_maker: { name: v('f-dm-name'), contact: v('f-dm-contact') },
+          acceptance_testers: v('f-testers'),
+        },
+        features: tableData('tb-features', ['name', 'description', 'priority', 'phase']),
+        workflows: tableData('tb-workflows', ['actor', 'trigger', 'steps', 'outcome']),
+        non_functional: {
+          performance: nfr('nfr-perf-on', 'nfr-perf-val'),
+          security: nfr('nfr-sec-on', 'nfr-sec-val'),
+          accessibility: nfr('nfr-a11y-on', 'nfr-a11y-val'),
+          availability: nfr('nfr-avail-on', 'nfr-avail-val'),
+          data_privacy: nfr('nfr-data-on', 'nfr-data-val'),
+          compliance: nfr('nfr-comp-on', 'nfr-comp-val'),
+          other: nfr('nfr-other-on', 'nfr-other-val'),
+        },
+        integrations: {
+          systems: tableData('tb-integ', ['system', 'purpose', 'direction', 'auth_method', 'phase_1_required']),
+          existing_system: v('f-existing'),
+        },
+        platforms: {
+          targets: checked('platform'),
+          hosting: radio('hosting'),
+        },
+        design: {
+          source: radio('design_src'),
+          references: v('f-design-refs'),
+          brand: v('f-brand'),
+          maintenance: v('f-maintenance'),
+        },
+        timeline: {
+          deadline: {
+            date: v('f-deadline'),
+            type: radio('dl_type'),
+            reason: v('f-dl-reason'),
+          },
+          milestones: tableData('tb-milestones', ['description', 'target_date']),
+          release_phases: tableData('tb-phases', ['phase', 'description', 'target_date']),
+        },
+        risks: tableData('tb-risks', ['description', 'likelihood', 'impact', 'mitigation']),
+      };
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  Validation
+    // ─────────────────────────────────────────────────────────────
+    const REQ_IDS = ['f-name', 'f-org', 'f-industry', 'f-problem', 'f-success', 'f-dm-name'];
+
+    function validate() {
+      let ok = true;
+      REQ_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        const empty = !el?.value.trim();
+        el?.classList.toggle('err', empty);
+        if (empty) ok = false;
+      });
+
+      // At least one outcome
+      if (!repData('outcomes-list').length) ok = false;
+
+      // At least one Must feature
+      const hasMust = [...document.querySelectorAll('#tb-features tr')].some(tr => {
+        const sel = tr.querySelector('select');
+        const inp = tr.querySelector('input');
+        return sel?.value === 'Must' && inp?.value.trim();
+      });
+      if (!hasMust) ok = false;
+
+      // At least one platform
+      if (!checked('platform').length) ok = false;
+
+      return ok;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  Generate & download
+    // ─────────────────────────────────────────────────────────────
+    function generate() {
+      const errBanner = document.getElementById('err-banner');
+      if (!validate()) {
+        errBanner.classList.add('show');
+        errBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      errBanner.classList.remove('show');
+
+      const data = serialise();
+      const slug = (data.project_identity.name || 'project')
+        .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `project-brief-${slug}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      localStorage.removeItem(DRAFT_KEY);
+      setStatus('Brief downloaded ✓');
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  localStorage — draft save / restore
+    //  Strategy: sync all current values into DOM attributes, then
+    //  snapshot the form's innerHTML so the full state is captured.
+    // ─────────────────────────────────────────────────────────────
+    const DRAFT_KEY = 'taskflow_brief_v1';
+    let saveTimer = null;
+
+    function syncDOM() {
+      // Push live JS values back into HTML attributes so innerHTML captures them
+      document.querySelectorAll('#brief-form input, #brief-form textarea, #brief-form select').forEach(el => {
+        if (el.type === 'checkbox' || el.type === 'radio') {
+          if (el.checked) el.setAttribute('checked', 'checked');
+          else el.removeAttribute('checked');
+        } else if (el.tagName === 'TEXTAREA') {
+          el.textContent = el.value;
+        } else if (el.tagName === 'SELECT') {
+          [...el.options].forEach(opt => {
+            if (opt.value === el.value) opt.setAttribute('selected', 'selected');
+            else opt.removeAttribute('selected');
+          });
+        } else {
+          el.setAttribute('value', el.value);
+        }
+      });
+    }
+
+    function saveDraft() {
+      syncDOM();
+      const snap = {
+        savedAt: new Date().toISOString(),
+        html: document.getElementById('brief-form').innerHTML,
+      };
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(snap));
+        setStatus('Saved ' + new Date().toLocaleTimeString());
+      } catch (e) {
+        setStatus('Save failed — storage full?');
+      }
+    }
+
+    function autoSave() {
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(saveDraft, 1800);
+    }
+
+    function restoreDraft() {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      try {
+        const snap = JSON.parse(raw);
+        document.getElementById('brief-form').innerHTML = snap.html;
+        // Re-apply NFR enabled classes (the 'on' class is in the snapshot, but
+        // disabled attributes need re-applying since they survive innerHTML)
+        document.querySelectorAll('.nfr-row').forEach(row => {
+          const cb = row.querySelector('input[type="checkbox"]');
+          if (cb?.checked) row.classList.add('on');
+        });
+        // Reattach auto-save listener (form element survives; children replaced)
+        attachAutoSave();
+        rebuildObserver();
+        document.getElementById('restore-banner').classList.remove('show');
+        setStatus('Draft restored — ' + new Date(snap.savedAt).toLocaleString());
+      } catch (e) {
+        console.warn('Draft restore failed', e);
+      }
+    }
+
+    function dismissRestore() {
+      localStorage.removeItem(DRAFT_KEY);
+      document.getElementById('restore-banner').classList.remove('show');
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  Sidebar intersection observer
+    // ─────────────────────────────────────────────────────────────
+    let sectionObserver = null;
+
+    function rebuildObserver() {
+      if (sectionObserver) sectionObserver.disconnect();
+      const navItems = document.querySelectorAll('.nav-a[href]');
+      sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            navItems.forEach(n =>
+              n.classList.toggle('active', n.getAttribute('href') === '#' + e.target.id)
+            );
+          }
+        });
+      }, { rootMargin: '-20% 0px -65% 0px' });
+      document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    //  Init
+    // ─────────────────────────────────────────────────────────────
+    function setStatus(msg) {
+      const el = document.getElementById('sb-status');
+      if (el) el.textContent = msg;
+    }
+
+    function attachAutoSave() {
+      const form = document.getElementById('brief-form');
+      // Remove old listeners by cloning isn't needed here — addEventListener is
+      // idempotent for the same function reference, but we use inline arrow so
+      // we rely on the throttle instead.
+      form.addEventListener('input', autoSave);
+      form.addEventListener('change', autoSave);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      attachAutoSave();
+      rebuildObserver();
+
+      // Check for saved draft
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        try {
+          const snap = JSON.parse(raw);
+          document.getElementById('restore-date').textContent =
+            new Date(snap.savedAt).toLocaleString();
+          document.getElementById('restore-banner').classList.add('show');
+        } catch (_) { }
+      }
+    });
+  </script>
+</body>
+
+</html>

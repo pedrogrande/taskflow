@@ -1,0 +1,14 @@
+{
+	"mcpServers": {
+		"taskflow": {
+			"command": "uv",
+			"args": [
+				"run",
+				"${CLAUDE_PLUGIN_ROOT}/servers/mcp_server.py"
+			],
+			"env": {
+				"DB_PATH": "${CLAUDE_PLUGIN_ROOT}/db/taskflow.db"
+			}
+		}
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"hooks": [
+		{
+			"event": "SessionStart",
+			"description": "On session start, call read_pending_tasks for each role and inject a summary so agents immediately know the pipeline state.",
+			"steps": [
+				{
+					"type": "mcp-tool",
+					"server": "taskflow",
+					"tool": "list_projects",
+					"continueOnError": true
+				}
+			]
+		},
+		{
+			"event": "PostToolUse",
+			"description": "Append an audit log entry for every taskflow MCP tool call.",
+			"matcher": {
+				"server": "taskflow"
+			},
+			"steps": [
+				{
+					"type": "shell",
+					"command": "echo \"$(date -u +%Y-%m-%dT%H:%M:%SZ) tool={{tool}} input={{inputJson}}\" >> \"${CLAUDE_PLUGIN_ROOT}/db/audit.log\"",
+					"continueOnError": true
+				}
+			]
+		}
+	]
+}

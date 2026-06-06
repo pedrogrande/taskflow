@@ -1,0 +1,12 @@
+{
+	"name": "taskflow",
+	"description": "Database-driven agentic pipeline for software development. Every agent action is authorised and scoped by a task record.",
+	"version": "0.1.0",
+	"author": {
+		"name": "Pete Argent"
+	},
+	"skills": "skills/",
+	"agents": "agents/",
+	"hooks": "hooks.json",
+	"mcpServers": ".mcp.json"
+}
